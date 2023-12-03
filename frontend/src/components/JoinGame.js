@@ -25,7 +25,7 @@ const JoinGame = (props) => {
                         </div>
                         <div className='mt-3 mb-2 form-group'>
                             <label htmlFor='userName' className='mb-2 fw-bold'>User Name</label>
-                            <input className='form-control' type="text" name='userName' value={userInput.userName} onChange={onChange} placeholder='Enter User Name'/>
+                            <input className='form-control' type="text" name='userName' value={userInput.userName} onChange={onChange} placeholder='Enter User Name' required='true'/>
                         </div>
                         <button type='submit' className='btn btn-sm btn-primary mt-3'>Join Game</button>
                     </form>

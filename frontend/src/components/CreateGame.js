@@ -24,7 +24,7 @@ const CreateGame = (props) => {
                     <form className='d-flex flex-column align-items-center' onSubmit={onSubmit}>
                         <div className='form-group mb-1'>
                             <label htmlFor='userName' className='mb-2 fw-bold'>User Name</label>
-                            <input className='form-control' type="text" name='userName' value={settings.userName} onChange={onChange} placeholder='Enter User Name'/>
+                            <input className='form-control' type="text" name='userName' value={settings.userName} onChange={onChange} placeholder='Enter User Name' required='true'/>
                             <label htmlFor="userOptions" className='mt-2 fw-bold mb-2'>Game Mode</label>
                             <select className='form-select' name='gameMode' value={settings.gameMode} onChange={onChange} placeholder='Choose Game'>
                                 <option value="paragraph">Paragraph</option>

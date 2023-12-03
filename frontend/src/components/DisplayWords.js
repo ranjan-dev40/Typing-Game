@@ -1,7 +1,7 @@
 import React from 'react'
 
 const typedCorrectlyStyle = {
-    "backgroundColor" : "#34eb77"
+    "color" : "lightgray" 
 }
 
 const currentStyle = {

@@ -63,33 +63,68 @@ const ImageGame = (props) => {
     },[timer])
     
     return (
-        <div className='d-flex flex-column justify-content-center align-items-center gap-3'>
-            <div>
-                <img style={{height: "35vh"}} src={image} alt="" />
-            </div>
-            <div>
-                <h1>Test your writing skills</h1>
-                <h3>Observe the given image and try to write your thoughts in the given time.</h3>
-            </div>
-            <div>
-                <div className='d-flex flex-column pb-1 align-items-end'>
-                    <p style={{margin:0}}>Time Remaining : {timer} seconds</p>
-                </div>
-                <textarea autoFocus name='paragraph' disabled={txtara} value={data} onChange={(e)=>changeData(e)} className='form-control' style={{resize: "none",height:"14vh",width: "80vw"}}></textarea>
-            </div>
-            <div style={{display: "flex", flexDirection: "row"}}>
-                <button style={{marginRight: "1rem"}} disabled={startBtn} onClick={onClickStart} className='btn btn-success btn-sm'>Start</button>
-                <button style={{marginLeft: "1rem"}} disabled={submitBtn} onClick={onClickSubmit} className='btn btn-primary btn-sm'>Submit</button>
-            </div>
-
-            <div className="card" style={{width: "80vw"}}>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item"><h2>Results</h2></li>
-                    {submitBtn&&defaultResult===result && <li className="list-group-item"><img style={{width: "3rem"}} src={spinner} alt="" /></li>}
-                    <li className="list-group-item"><p>{result}</p></li>
-                </ul>
-            </div>
+      <div className="d-flex flex-column justify-content-center align-items-center gap-3">
+        <div>
+          <img style={{ height: "35vh" }} src={image} alt="" />
         </div>
+        <div>
+          <h1>Test your writing skills</h1>
+          <h3>
+            Observe the given image and try to write your thoughts in the given
+            time.
+          </h3>
+        </div>
+        <div>
+          <div className="d-flex flex-column pb-1 align-items-end">
+            <p style={{ margin: 0, color: "red", fontWeight: "bold" }}>
+              Time Remaining : {timer} seconds
+            </p>
+          </div>
+          <textarea
+            autoFocus
+            name="paragraph"
+            disabled={txtara}
+            value={data}
+            onChange={(e) => changeData(e)}
+            className="form-control"
+            style={{ resize: "none", height: "14vh", width: "80vw" }}
+          ></textarea>
+        </div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <button
+            style={{ marginRight: "1rem" }}
+            disabled={startBtn}
+            onClick={onClickStart}
+            className="btn btn-success btn-sm"
+          >
+            Start
+          </button>
+          <button
+            style={{ marginLeft: "1rem" }}
+            disabled={submitBtn}
+            onClick={onClickSubmit}
+            className="btn btn-primary btn-sm"
+          >
+            Submit
+          </button>
+        </div>
+
+        <div className="card" style={{ width: "80vw" }}>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">
+              <h2>Results</h2>
+            </li>
+            {submitBtn && defaultResult === result && (
+              <li className="list-group-item">
+                <img style={{ width: "3rem" }} src={spinner} alt="" />
+              </li>
+            )}
+            <li className="list-group-item">
+              <p>{result}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
     );
 }
  

@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 const socketio = require('socket.io')
 const mongoose = require('mongoose')
+require("dotenv").config();
 
 const OpenAIAPI = require('openai')
-const openai = new OpenAIAPI({apiKey: ""})
+const openai = new OpenAIAPI({apiKey: process.env.OPEN_AI_API_KEY})
+
 
 const server = app.listen(5000) 
 const io = socketio(server, {cors: {origin: "*"}})
@@ -45,8 +47,8 @@ const Code = require('./Models/Code')
 const QuotableAPI = require('./QuotableAPI')
 const Image = require('./Models/Image')
 
-// const mongoURI = "mongodb://localhost:27017/typinggame"
-const mongoURI = "mongodb+srv://minor-project:k4fSgmpNuI9Am6gZ@cluster0.le9ctvj.mongodb.net/typing-game?retryWrites=true&w=majority"
+
+const mongoURI = process.env.MONGODB_URL
 mongoose.connect(mongoURI, console.log("Connected to DB")) 
 
 const calculateTime = (time) => {
