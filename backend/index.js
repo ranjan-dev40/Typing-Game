@@ -3,6 +3,9 @@ const app = express()
 const socketio = require('socket.io')
 const mongoose = require('mongoose')
 
+const OpenAIAPI = require('openai')
+const openai = new OpenAIAPI({apiKey: ""})
+
 const server = app.listen(5000) 
 const io = socketio(server, {cors: {origin: "*"}})
 
@@ -13,10 +16,34 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions))
+app.use(express.json())
+
+//Chat GPT implementation here
+app.post('/chatgpt', async (req, res) => {
+    try {
+      const prompt = req.body.prompt; // Ensure req.body and req.body.prompt are defined
+      console.log(prompt)
+      if (!prompt) {
+        return res.status(400).json({ error: 'Prompt is required.' });
+      }
+
+      const aiResponse = await openai.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "gpt-3.5-turbo",
+    });
+        console.log("[apiResponse]", aiResponse);
+      const text = aiResponse.choices[0].message;
+      res.status(200).json({ text });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error?.response?.data?.error?.message || 'Something went wrong');
+    }
+});
 
 const Game = require('./Models/Game')
 const Code = require('./Models/Code')
 const QuotableAPI = require('./QuotableAPI')
+const Image = require('./Models/Image')
 
 // const mongoURI = "mongodb://localhost:27017/typinggame"
 const mongoURI = "mongodb+srv://minor-project:k4fSgmpNuI9Am6gZ@cluster0.le9ctvj.mongodb.net/typing-game?retryWrites=true&w=majority"
@@ -149,7 +176,6 @@ io.on('connect', (socket)=> {
         }
     })
 
-    // socket.emit('test', 'connection to server successful')
     socket.on('create-game', async (settings)=>{
         try{
 
@@ -190,6 +216,39 @@ io.on('connect', (socket)=> {
 
         } catch (err) {
             console.log(err)
+        }
+    })
+
+    socket.on('getimage', async ()=> {
+
+        const data = await Image.find({})
+
+        // Get a random index
+        const randomIndex = Math.floor(Math.random() * data.length);
+
+        imgurl = data[randomIndex].url
+        socket.emit('imgurl', imgurl)
+    })
+
+    socket.on('userpara', async (userpara)=> {
+        
+        try {
+
+            //Prompt for mistakes
+            const prompt = `Find the grammatical mistakes in the given paragraph: ${userpara}. Also find what extra points can be added in this paragraph. Provide response in the form of a paragraph`; // Ensure req.body and req.body.prompt are defined
+            const aiResponse = await openai.chat.completions.create({
+                messages: [{ role: "user", content: prompt }],
+                model: "gpt-3.5-turbo",
+            });  
+            // console.log("[apiResponse]", aiResponse);
+            const text = aiResponse.choices[0].message;
+
+
+            socket.emit('gptpararesponse', text.content)
+
+        } catch (error) {
+            console.error(error);
+            console.log("Some error occured")
         }
     })
 })

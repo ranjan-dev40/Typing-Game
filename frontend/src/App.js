@@ -11,6 +11,7 @@ import JoinGame from './components/JoinGame';
 import TypingGame from './components/TypingGame'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import ImageGame from './components/ImageGame';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/" element={<GameMenu/>} />
           <Route exact path="/game/create" element={<CreateGame/>} />
           <Route exact path="/game/join" element={<JoinGame/>} />
+          <Route exact path="/imagegame" element={<ImageGame/>} />
           {/* <Route exact path="/game/:gameID" render={(props) => {
           <TypingGame {...props} gameState={gameState}/>
           }}
